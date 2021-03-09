@@ -36,7 +36,7 @@ parent-process-id-spoofing
 cd encrypt
 go build
 
-you can change sharp.exe to your own C# exe file
+you can change sharp.exe to other C# exe file
 
 ./encrypt.exe ./sharp.exe
 
