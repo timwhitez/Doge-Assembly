@@ -2,7 +2,11 @@
 Golang evasion tools, use execute-assembly to excute C# tools
 
 ## feature
+使用Golang execute assembly加载C#程序
 
+C#程序编译进资源文件内，使用AES加密
+
+进程注入的过程采用direct syscall
 
 ## Usage
 
