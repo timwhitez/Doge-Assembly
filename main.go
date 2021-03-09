@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"./assembly"
+	"github.com/timwhitez/Doge-Assembly/assembly"
 )
 
 func main() {
