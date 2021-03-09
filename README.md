@@ -5,7 +5,7 @@
 - 🐶Doge For Defense Evasion&Offensive Security
 
 # Doge-Assembly
-Golang evasion tools, use execute-assembly to excute C# tools
+Golang evasion tool, execute-assembly .Net file
 
 ## Intro
 Are you still worrying about antivirus?
