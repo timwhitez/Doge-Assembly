@@ -4,7 +4,7 @@ Golang evasion tools, use execute-assembly to excute C# tools
 ## feature
 使用Golang execute assembly加载C#程序
 
-C#程序编译进资源文件内，使用AES加密
+C#程序编译为静态资源文件，使用AES加密
 
 进程注入的过程采用direct syscall
 
@@ -29,3 +29,11 @@ go build
 ```
 demo sharp.exe is SharpChromium.exe
 ```
+
+## ref
+- https://github.com/go-bindata/go-bindata
+
+- https://github.com/lesnuages/go-execute-assembly
+
+- https://github.com/C-Sto/BananaPhone
+
