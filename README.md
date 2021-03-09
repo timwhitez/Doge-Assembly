@@ -8,7 +8,7 @@
 Golang evasion tools, use execute-assembly to excute C# tools
 
 ## Intro
-Are you still worrying about defense evasion?
+Are you still worrying about antivirus?
 
 
 ## feature
