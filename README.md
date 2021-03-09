@@ -57,3 +57,5 @@ bananaphone, golang hells gate:
 
 - https://github.com/C-Sto/BananaPhone
 
+# 🚀Star Trend
+[![Stargazers over time](https://starchart.cc/timwhitez/Doge-Assembly.svg)](https://starchart.cc/timwhitez/Doge-Assembly)
