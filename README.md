@@ -19,6 +19,5 @@ go build
 ```
 
 ```
-the demo sharp.exe is SharpChromium.exe
-
+demo sharp.exe is SharpChromium.exe
 ```
