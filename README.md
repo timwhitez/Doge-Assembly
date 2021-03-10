@@ -37,6 +37,7 @@ parent-process-id-spoofing
 ## Usage
 注意，若源程序需要多个参数执行，请使用如下方式:
 ```
+in powershell:
 Doge-Assembly.exe '-t schtask -c \"C:\Windows\System32\cmd.exe\" -a \"/c calc\" -n Test -m add -o hourly'
 ```
 
