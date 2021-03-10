@@ -12,6 +12,10 @@ Are you still worrying about antivirus?
 
 
 ## feature
+更新etw bypass相关代码，请重新获取依赖
+
+go get -u github.com/timwhitez/Doge-Assembly/assembly
+
 使用Golang execute assembly加载C#程序
 
 C#程序编译为静态资源文件，使用AES加密，使用时最好替换自定义密钥
@@ -20,8 +24,6 @@ clr.dll进程注入的过程采用direct syscall进行api调用
 
 若想增强免杀效果可自行添加:
 ```
-ETW Bypass
-
 反沙箱反调试等相关代码
 
 Blockdlls
