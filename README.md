@@ -12,7 +12,7 @@ Are you still worrying about antivirus?
 
 
 ## feature
-更新etw bypass相关代码，请重新获取依赖
+更新etw bypass相关代码，full dll unhooking相关代码，请重新获取依赖
 
 go get -u github.com/timwhitez/Doge-Assembly/assembly
 
