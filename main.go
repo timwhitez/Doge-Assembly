@@ -48,7 +48,7 @@ func main() {
 	fmt.Println("dll: "+strconv.Itoa(len(hostingDLL)))
 	fmt.Println("bin: "+strconv.Itoa(len(assemblyBytes))+"\n")
 
-	err = assembly.ExecuteAssembly(hostingDLL, assemblyBytes, assemblyArgs, true, true)
+	err = assembly.ExecuteAssembly(hostingDLL, assemblyBytes, assemblyArgs, true)
 	if err != nil {
 		log.Fatal(err)
 	}
