@@ -28,7 +28,7 @@ func main() {
 	assemblyArgs := ""
 	if len(os.Args) > 1 {
 		for i := 1 ;i < len(os.Args);i++{
-			if i == 2 {
+			if i == 1 {
 				assemblyArgs = os.Args[i]
 			}else{
 				assemblyArgs = assemblyArgs + " " + os.Args[i]
