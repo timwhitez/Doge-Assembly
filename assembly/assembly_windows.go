@@ -122,8 +122,8 @@ func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi boo
 
 
 	fmt.Println("Dynamic Evasion")
-	fmt.Println("Please Wait for 5 seconds......")
-	time.Sleep(5*time.Second)
+	fmt.Println("Please Wait for 10 seconds......")
+	time.Sleep(10*time.Second)
 
 
 
