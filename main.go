@@ -9,6 +9,21 @@ import (
 	"github.com/timwhitez/Doge-Assembly/assembly"
 )
 
+
+func init(){
+	err := RefreshPE(`c:\windows\system32\ntdll.dll`)
+	if err != nil {
+		log.Println("RefreshPE failed:", err)
+	}
+	err = RefreshPE(`c:\windows\system32\kernel32.dll`)
+	if err != nil {
+		log.Println("RefreshPE failed:", err)
+	}
+	fmt.Println("\nAll Dll Unhooked!\n")
+}
+
+
+
 func main() {
 	assemblyArgs := ""
 	if len(os.Args) > 1 {
