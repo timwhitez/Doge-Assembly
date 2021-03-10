@@ -312,8 +312,8 @@ func ExecuteAssembly(hostingDll []byte, assembly []byte, params string, amsi boo
 	log.Println("Got thread handle:", threadHandle)
 
 
-	fmt.Printf("Press any key to continue...")
-	bufio.NewReader(os.Stdin).ReadBytes('\n')
+	//fmt.Printf("Press any key to continue...")
+	//bufio.NewReader(os.Stdin).ReadBytes('\n')
 
 
 
