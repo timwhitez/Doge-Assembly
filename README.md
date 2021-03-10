@@ -71,6 +71,13 @@ bananaphone, golang hells gate:
 
 - https://github.com/C-Sto/BananaPhone
 
+etw bypass:
+
+-https://blog.xpnsec.com/hiding-your-dotnet-etw/
+
+-https://idiotc4t.com/defense-evasion/memory-pacth-bypass-etw
+
+
 
 ## screenshot
 ```
