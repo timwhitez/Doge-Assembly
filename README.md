@@ -39,6 +39,9 @@ parent-process-id-spoofing
 ```
 in powershell:
 Doge-Assembly.exe '-t schtask -c \"C:\Windows\System32\cmd.exe\" -a \"/c calc\" -n Test -m add -o hourly'
+
+in cmd:
+Doge-Assembly.exe -t schtask -c \"C:\Windows\System32\cmd.exe\" -a \"/c calc\" -n Test -m add -o hourly
 ```
 
 ```
