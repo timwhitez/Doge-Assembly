@@ -78,6 +78,9 @@ etw bypass:
 -https://idiotc4t.com/defense-evasion/memory-pacth-bypass-etw
 
 
+## todo
+目前兼容性存在少许问题
+
 
 ## screenshot
 ```
