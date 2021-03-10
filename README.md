@@ -43,6 +43,7 @@ you can change sharp.exe to other C# exe file
 copy sharp.exe.cipher to bin/
 
 cd ..
+go get -u github.com/timwhitez/Doge-Assembly/assembly
 go-bindata data/
 go build
 
