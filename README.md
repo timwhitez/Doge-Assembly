@@ -20,6 +20,8 @@ clr.dll进程注入的过程采用direct syscall进行api调用
 
 若想增强免杀效果可自行添加:
 ```
+ETW Bypass
+
 反沙箱反调试等相关代码
 
 Blockdlls
