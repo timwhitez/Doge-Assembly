@@ -63,9 +63,8 @@ func decrypt(ciphertext []byte, key []byte)(rawText []byte){
 	}
 
 	//err = ioutil.WriteFile("plaintext.exe", plaintext, 0777)
-	if err != nil {
-		log.Panic(err)
-	}
-
+	//if err != nil {
+	//	log.Panic(err)
+	//}
 	return plaintext
 }
