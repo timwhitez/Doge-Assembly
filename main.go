@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/timwhitez/Doge-Assembly/assembly"
+	"golang.org/x/sys/windows/registry"
 )
 
 
