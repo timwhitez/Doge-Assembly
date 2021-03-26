@@ -52,7 +52,7 @@ you can change sharp.exe to other C# exe file
 
 ./encrypt.exe ./sharp.exe
 
-copy sharp.exe.cipher to bin/
+copy sharp.exe.cipher to data/
 
 cd ..
 go get -u github.com/timwhitez/Doge-Assembly/assembly
