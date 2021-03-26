@@ -3,7 +3,7 @@
 package assembly
 
 import (
-	"bufio"
+	//"bufio"
 	"bytes"
 	"encoding/binary"
 	"errors"
@@ -11,7 +11,7 @@ import (
 	bananaphone "github.com/C-Sto/BananaPhone/pkg/BananaPhone"
 	"golang.org/x/sys/windows"
 	"log"
-	"os"
+	//"os"
 	"os/exec"
 	"strings"
 	"syscall"
