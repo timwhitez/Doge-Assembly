@@ -21,7 +21,7 @@ go get -u github.com/timwhitez/Doge-Assembly
 
 使用Golang execute assembly加载C#程序
 
-C#程序编译为静态资源文件，使用AES加密，使用时最好替换自定义密钥
+C#程序编译为静态资源文件，使用AES加密，动态生成密钥
 
 shellcode注入的过程采用direct syscall进行api调用
 
