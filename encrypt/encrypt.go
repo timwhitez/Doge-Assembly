@@ -3,13 +3,62 @@ package main
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/md5"
 	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
+
+	rand1"math/rand"
+
+	"github.com/Binject/debug/pe"
 )
+
+// DetectDotNet - returns true if a .NET assembly. 2nd return value is detected version string.
+func DetectDotNet(filename string) (bool, string) {
+	// auto-detect .NET assemblies and version
+	pefile, err := pe.Open(filename)
+	if err != nil {
+		return false, ""
+	}
+	defer pefile.Close()
+	return pefile.IsManaged(), pefile.NetCLRVersion()
+}
+
+//生成随机字符串
+func GetRandomString(length int) string{
+	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	bytes := []byte(str)
+	result := []byte{}
+	r := rand1.New(rand1.NewSource(time.Now().UnixNano()))
+	for i := 0; i < length; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
+	}
+	return string(result)
+}
+// 生成32位MD5
+func MD5(text string) string {
+	ctx := md5.New()
+	ctx.Write([]byte(text))
+	return hex.EncodeToString(ctx.Sum(nil))
+}
+func wr(str string) {
+	f, err := os.Create("aeskey.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	_, err = f.WriteString(str)
+	if err != nil {
+		fmt.Println(err)
+		f.Close()
+		return
+	}
+}
 
 func main() {
 	if len(os.Args) != 2{
@@ -21,6 +70,26 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	_, NetCLRVersion := DetectDotNet(filename)
+
+	f0, err := os.Create("version.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	_, err = f0.WriteString(NetCLRVersion)
+	if err != nil {
+		fmt.Println(err)
+		f0.Close()
+		return
+	}
+	
+
+
+	key0 := MD5(GetRandomString(16))
+
+	wr(key0)
 
 	// The key should be 16 bytes (AES-128), 24 bytes (AES-192) or
 	// 32 bytes (AES-256)

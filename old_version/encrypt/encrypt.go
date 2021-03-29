@@ -1,16 +1,21 @@
-
 package main
 
 import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
-func encrypt(filename string,keyfile string)(cipherText []byte){
+func main() {
+	if len(os.Args) != 2{
+		fmt.Println(os.Args[0]+" filename")
+	}
+	filename := os.Args[1]
 	log.Print("File encryption example")
 	plaintext, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -20,7 +25,7 @@ func encrypt(filename string,keyfile string)(cipherText []byte){
 	// The key should be 16 bytes (AES-128), 24 bytes (AES-192) or
 	// 32 bytes (AES-256)
 
-	key, err := ioutil.ReadFile(keyfile)
+	key, err := ioutil.ReadFile("aeskey.txt")
 
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -40,31 +45,9 @@ func encrypt(filename string,keyfile string)(cipherText []byte){
 	}
 
 	ciphertext := gcm.Seal(nonce, nonce, plaintext, nil)
-	return ciphertext
-}
-
-
-
-func decrypt(ciphertext []byte, key []byte)(rawText []byte){
-	block, err := aes.NewCipher(key)
+	// Save back to file
+	err = ioutil.WriteFile(filename+".cipher", ciphertext, 0777)
 	if err != nil {
 		log.Panic(err)
 	}
-
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		log.Panic(err)
-	}
-	nonce := ciphertext[:gcm.NonceSize()]
-	ciphertext = ciphertext[gcm.NonceSize():]
-	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	//err = ioutil.WriteFile("plaintext.exe", plaintext, 0777)
-	//if err != nil {
-	//	log.Panic(err)
-	//}
-	return plaintext
 }
