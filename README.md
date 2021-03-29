@@ -7,6 +7,9 @@
 # Doge-Assembly
 Golang evasion tool, execute-assembly .Net file
 
+## 使用go-donut重构 兼容性更好
+原版见[old_version](./old_version)
+
 ## Intro
 Are you still worrying about antivirus?
 
@@ -14,13 +17,13 @@ Are you still worrying about antivirus?
 ## feature
 更新etw bypass相关代码，full dll unhooking相关代码，请重新获取依赖
 
-go get -u github.com/timwhitez/Doge-Assembly/assembly
+go get -u github.com/timwhitez/Doge-Assembly
 
 使用Golang execute assembly加载C#程序
 
 C#程序编译为静态资源文件，使用AES加密，使用时最好替换自定义密钥
 
-clr.dll进程注入的过程采用direct syscall进行api调用
+shellcode注入的过程采用direct syscall进行api调用
 
 若想增强免杀效果可自行添加:
 ```
@@ -52,6 +55,10 @@ you can change sharp.exe to other C# exe file
 
 ./encrypt.exe ./sharp.exe
 
+copy version.txt to data/
+
+copy aeskey.txt to data/
+
 copy sharp.exe.cipher to data/
 
 cd ..
@@ -71,6 +78,10 @@ demo sharp.exe is SharpChromium.exe
 
 - https://github.com/go-bindata/go-bindata
 
+go-donut:
+
+- https://github.com/Binject/go-donut
+
 golang 的 execute assembly 实现:
 
 - https://github.com/lesnuages/go-execute-assembly
@@ -87,28 +98,31 @@ etw bypass:
 
 
 ## todo
-目前兼容性存在少许问题
+
 
 
 ## screenshot
 ```
 PS D:\Doge-Assembly> .\Doge-Assembly.exe
-Decrypt Success...
+2021/03/29 17:08:14 Reloading c:\windows\system32\kernel32.dll...
+2021/03/29 17:08:14 Made memory map RWX
+2021/03/29 17:08:14 DLL overwritten
+2021/03/29 17:08:14 Restored memory map permissions
+2021/03/29 17:08:14 Reloading c:\windows\system32\kernelbase.dll...
+2021/03/29 17:08:14 Made memory map RWX
+2021/03/29 17:08:14 DLL overwritten
+2021/03/29 17:08:14 Restored memory map permissions
 
-dll: 19968
-bin: 584704
+All Dll Unhooked!
 
-Dynamic Evasion
-Please Wait for 10 seconds......
-2481571495936
-BananaPhone: Allocated 20480bytes at 0x241C9300000
-BananaPhone: Wrote 20480bytes at 0x241C9300000
-2481571561472
-BananaPhone: Allocated 585728bytes at 0x241C9310000
-BananaPhone: Wrote 584715bytes at 0x241C9310000
-2021/03/09 16:37:29 Got thread handle: 404
+2021/03/29 17:08:14 Reloading c:\windows\system32\ntdll.dll...
+2021/03/29 17:08:14 Made memory map RWX
+2021/03/29 17:08:14 DLL overwritten
+2021/03/29 17:08:14 Restored memory map permissions
+Mess with the banana, die like the... banana?
+patching .NET ETW ......
+ETW patched!!
 
-out:
 [X] Invalid argument passed:
 
 Usage:
@@ -125,10 +139,6 @@ Arguments:
                                         cookies matching those domains. Otherwise,
                                         all cookies are saved into a temp file of
                                         the format "%TEMP%\$browser-cookies.json"
-
-
-err:
-
 ```
 
 # 🚀Star Trend
