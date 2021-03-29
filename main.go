@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"./loader"
-	"./donut"
+	"github.com/timwhitez/Doge-Assembly/loader"
+	"github.com/timwhitez/Doge-Assembly/donut"
 )
 
 var Version string
@@ -120,5 +120,3 @@ func main() {
 	}
 
 }
-
-
