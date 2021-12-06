@@ -13,7 +13,7 @@ import (
 
 
 func banana() (uint16,uint16){
-	bp, e := bananaphone.NewBananaPhone(bananaphone.AutoBananaPhoneMode)
+	bp, e := bananaphone.NewBananaPhone(bananaphone.DiskBananaPhoneMode)
 	if e != nil {
 		panic(e)
 	}

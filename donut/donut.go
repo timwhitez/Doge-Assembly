@@ -3,6 +3,7 @@ package donut
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 	"github.com/Binject/debug/pe"
 	"io/ioutil"
 	"log"
@@ -27,10 +28,13 @@ func ShellcodeFromURL(fileURL string, config *DonutConfig) (*bytes.Buffer, error
 }
 
 // DetectDotNet - returns true if a .NET assembly. 2nd return value is detected version string.
-func DetectDotNet(filename string) (bool, string) {
+func DetectDotNet(file []byte) (bool, string) {
 	// auto-detect .NET assemblies and version
-	pefile, err := pe.Open(filename)
+	readerAt := bytes.NewReader(file)
+
+	pefile, err := pe.NewFile(readerAt)
 	if err != nil {
+		fmt.Println("open PE err")
 		return false, ""
 	}
 	defer pefile.Close()
@@ -38,10 +42,24 @@ func DetectDotNet(filename string) (bool, string) {
 }
 
 // ShellcodeFromFile - Loads PE from file, makes shellcode
-func ShellcodeFromFile(version string, config *DonutConfig, b []byte) (*bytes.Buffer, error) {
+func ShellcodeFromFile(config *DonutConfig, b []byte) (*bytes.Buffer, error) {
+	dotNetMode, dotNetVersion := DetectDotNet(b)
+	if dotNetMode {
+		fmt.Print("dotNetMode")
+		fmt.Println(dotNetVersion)
+		config.Type = DONUT_MODULE_NET_EXE
+	} else {
+		fmt.Println("EXEMode")
+		config.Type = DONUT_MODULE_EXE
+	}
+	if dotNetVersion != "" && config.Runtime == "" {
+		config.Runtime = dotNetVersion
+	}
+	/*
 		dotNetVersion := version
 		config.Type = DONUT_MODULE_NET_EXE
 		config.Runtime = dotNetVersion
+	 */
 	return ShellcodeFromBytes(bytes.NewBuffer(b), config)
 }
 

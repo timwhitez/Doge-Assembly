@@ -14,20 +14,8 @@ import (
 	"time"
 
 	rand1"math/rand"
-
-	"github.com/Binject/debug/pe"
 )
 
-// DetectDotNet - returns true if a .NET assembly. 2nd return value is detected version string.
-func DetectDotNet(filename string) (bool, string) {
-	// auto-detect .NET assemblies and version
-	pefile, err := pe.Open(filename)
-	if err != nil {
-		return false, ""
-	}
-	defer pefile.Close()
-	return pefile.IsManaged(), pefile.NetCLRVersion()
-}
 
 //生成随机字符串
 func GetRandomString(length int) string{
@@ -70,22 +58,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	_, NetCLRVersion := DetectDotNet(filename)
-
-	f0, err := os.Create("version.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	_, err = f0.WriteString(NetCLRVersion)
-	if err != nil {
-		fmt.Println(err)
-		f0.Close()
-		return
-	}
-	
-
 
 	key0 := MD5(GetRandomString(16))
 
