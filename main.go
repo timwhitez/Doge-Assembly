@@ -105,7 +105,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	assemblyBytesci, er := Asset("data/sharp.exe.cipher")
+
+	var assemblyBytesci []byte
+	var er error
+
+	for _,i := range AssetNames(){
+		if !strings.Contains(strings.ToLower(i),"aeskey"){
+			fmt.Println(i)
+			assemblyBytesci, er = Asset(i)
+		}
+	}
+	//assemblyBytesci, er = Asset("data/sharp.exe.cipher")
 	if er != nil {
 		panic(er)
 	}
