@@ -49,6 +49,8 @@ func main() {
 
 
 	blacklist := []string{
+		//以mimikatz为例，恶意字符串替换
+		/*
 		"mimikatz",
 		"delpy",
 		"benjamin",
@@ -65,6 +67,8 @@ func main() {
 		".####.",
 		".## ^ ##.",
 		"## v ##",
+
+		 */
 	}
 
 	entropy := 3
