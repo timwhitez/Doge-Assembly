@@ -8,7 +8,7 @@
 Golang evasion tool, execute-assembly .Net file
 
 ## 20211206 加入非.net exe支持，fix bug
-支持data文件夹内aeskey.exe与任意文件名exe加密文件识别
+支持data文件夹内aeskey.txt与任意文件名exe加密文件识别
 
 支持字符串混淆，详见main.go
 
